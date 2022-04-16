@@ -1,7 +1,7 @@
 /** @format */
 
 import { useSelector, useDispatch } from "react-redux";
-
+import { counterActions } from "../store/counter";
 import classes from "./Counter.module.css";
 
 const Counter = () => {
@@ -13,35 +13,30 @@ const Counter = () => {
 	//we have to pass a function to useSelector the function
 	//will recieve the state from the redux
 	//the parte we want to extract from the redux store
-	const counter = useSelector((state) => state.counter);
-
+	//we can have as many as we need of the useSelector
+	const counter = useSelector((state) => state.counter.counter);
+	const show = useSelector((state) => state.counter.showCounter);
 	const incrementHandler = () => {
-		//an action is an object as an argument
-		dispatch({
-			type: "increment",
-		});
+		dispatch(counterActions.increment());
 	};
 
 	const increasetHandler = () => {
-		dispatch({
-			type: "increase",
-			amount: 10,
-		});
+		dispatch(counterActions.increase(10));
 	};
 
 	const decrementHandler = () => {
-		//an action is an object as an argument
-		dispatch({
-			type: "decrement",
-		});
+		dispatch(counterActions.decrement());
 	};
 
-	const toggleCounterHandler = () => {};
+	const toggleCounterHandler = () => {
+		dispatch(counterActions.toggleCounter());
+		console.log("hello");
+	};
 
 	return (
 		<main className={classes.counter}>
 			<h1>Redux Counter</h1>
-			<div className={classes.value}>{counter}</div>
+			{show && <div className={classes.value}>{counter}</div>}
 			<div>
 				<button onClick={incrementHandler}>increment</button>
 				<button onClick={increasetHandler}>Increase by 10</button>

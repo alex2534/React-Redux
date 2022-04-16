@@ -1,31 +1,16 @@
 /** @format */
 
-import react, { createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./auth";
+import counterReducer from "./counter";
 
-const counterReducer = (state = { counter: 0 }, action) => {
-	//an action return an object of any type
-	if (action.type === "increment") {
-		return {
-			counter: state.counter + 1,
-		};
-	}
-
-	//an action return an object of any type
-	if (action.type === "increase") {
-		return {
-			counter: state.counter + action.amount,
-		};
-	}
-	//an action return an object of any type
-	if (action.type === "decrement") {
-		return {
-			counter: state.counter - 1,
-		};
-	}
-	return state;
-};
-
+//the create store receives a parameter an object a configured object
 //this creates our react store
-const store = createStore(counterReducer);
+const store = configureStore({
+	reducer: {
+		counter: counterReducer,
+		auth: authReducer,
+	},
+});
 
 export default store;
